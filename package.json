@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "fmt": "biome check --write",
+    "lint": "biome check .",
+    "type-check": "tsc --noEmit",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "storybook": "storybook dev -p 6006",

@@ -90,14 +90,18 @@ Failed to resolve dependency: markdown-to-jsx, present in client 'optimizeDeps.i
   - タイマー（setTimeout、clearTimeout）
   - アニメーション状態管理
 - [x] IntersectionObserverのテスト
-  - `src/components/LazyImage.tsx`を実装
-  - 画像の遅延読み込み
-  - IntersectionObserver API
-  - プレースホルダー表示
-  - エラーハンドリング
-  - ローディングインジケーター
-  - カスタム閾値とルートマージン
-- [ ] CI/CD連携
+  - `src/components/ColorChangeBox.tsx`を実装
+  - シンプルな色変更ボックス
+  - 画面内に入ったら色が変わる
+  - カスタムサイズ、色、閾値対応
+  - アニメーション付き
+- [x] CI/CD連携
+  - GitHub Actionsワークフロー作成
+  - 複数Node.jsバージョンでのテスト
+  - リンター、型チェック、テストの自動実行
+  - Storybookテストの自動実行
+  - カバレッジレポートの自動アップロード
+  - GitHub Pagesへの自動デプロイ
 
 ### 5. パフォーマンス
 - [ ] テスト実行速度
@@ -128,17 +132,16 @@ Failed to resolve dependency: markdown-to-jsx, present in client 'optimizeDeps.i
   - キーボードナビゲーション
   - タイトル付き/なし対応
 
-### LazyImage コンポーネント
-- **ファイル**: `src/components/LazyImage.tsx`
+### ColorChangeBox コンポーネント
+- **ファイル**: `src/components/ColorChangeBox.tsx`
 - **機能**:
-  - IntersectionObserverによる遅延読み込み
-  - プレースホルダー表示
-  - ローディングインジケーター
-  - エラーハンドリング
-  - カスタム閾値とルートマージン
-  - コールバック関数（onLoad、onError）
-  - アニメーション（opacity、pulse）
-  - アクセシビリティ対応
+  - IntersectionObserverによる色変更
+  - 画面内に入ったら色が変わる
+  - カスタムサイズ（width、height）
+  - カスタム色（initialColor、activeColor）
+  - カスタム閾値（threshold）
+  - アニメーション（transition-colors）
+  - テキスト表示（画面外/画面内！）
 
 ### Storybook ストーリー
 - **Button**: `src/components/Button.stories.tsx`
@@ -159,15 +162,14 @@ Failed to resolve dependency: markdown-to-jsx, present in client 'optimizeDeps.i
   - ScrollLockTest（スクロール無効化）
   - ComplexContent（複雑なコンテンツ）
 
-- **LazyImage**: `src/components/LazyImage.stories.tsx`
-  - Default, MultipleImages, CustomPlaceholder
-  - ErrorImage, CustomSize
-  - WithIntersectionObserver（IntersectionObserverテスト）
+- **ColorChangeBox**: `src/components/ColorChangeBox.stories.tsx`
+  - Default, Large, Small, CustomColors
+  - LowThreshold, HighThreshold, MultipleBoxes
+  - WithIntersectionObserver（基本的なテスト）
   - ScrollTest（スクロールテスト）
-  - WithCallbacks（コールバック関数テスト）
-  - CustomThreshold（カスタム閾値）
-  - ErrorHandling（エラーハンドリング）
-  - MultipleLoading（複数画像同時読み込み）
+  - CustomThresholdTest（カスタム閾値）
+  - MultipleBoxesTest（複数ボックス）
+  - AnimationTest（アニメーション）
 
 ### Play Functions - ブラウザAPIテスト
 - **WithBrowserAPIs**: モーダルの存在確認、aria属性、要素の存在確認
@@ -179,12 +181,11 @@ Failed to resolve dependency: markdown-to-jsx, present in client 'optimizeDeps.i
 - **ComplexContent**: フォーム入力、フォーカス移動、値の検証
 
 ### Play Functions - IntersectionObserverテスト
-- **WithIntersectionObserver**: 画像要素の存在確認、プレースホルダー確認
-- **ScrollTest**: スクロールによる画像読み込み、src属性の変更確認
-- **WithCallbacks**: コールバック関数の動作確認
-- **CustomThreshold**: カスタム設定の動作確認
-- **ErrorHandling**: エラー状態の表示確認
-- **MultipleLoading**: 複数画像の同時読み込み確認
+- **WithIntersectionObserver**: ボックス要素の存在確認、初期色の確認
+- **ScrollTest**: スクロールによる色変更、クラス名の変更確認
+- **CustomThresholdTest**: カスタム閾値の動作確認
+- **MultipleBoxesTest**: 複数ボックスの同時色変更確認
+- **AnimationTest**: アニメーションクラスの確認
 
 ### 使用したブラウザAPI
 - **DOM操作**: querySelectorAll、focus、activeElement
@@ -194,26 +195,50 @@ Failed to resolve dependency: markdown-to-jsx, present in client 'optimizeDeps.i
 - **フォーカス**: tabindex、focusable要素の取得
 - **アクセシビリティ**: aria-modal、role="dialog"、aria-labelledby
 - **IntersectionObserver**: observe、disconnect、isIntersecting
-- **画像**: onLoad、onError、src属性の動的変更
 - **スクロール**: scrollIntoView、スクロール位置の制御
+
+## CI/CD設定
+
+### GitHub Actions ワークフロー
+- **ファイル**: `.github/workflows/test.yml`
+- **機能**:
+  - プッシュ・プルリクエスト時の自動実行
+  - Node.js 18.x、20.xでの並列テスト
+  - pnpmキャッシュの活用
+  - リンター、型チェック、テストの実行
+  - Storybookテストの実行
+  - カバレッジレポートのアップロード
+  - GitHub Pagesへの自動デプロイ
+
+### 追加されたスクリプト
+- **lint**: Biomeによるリンター実行
+- **type-check**: TypeScript型チェック
+- **test:run**: テストの一括実行
+- **test:ui**: Vitest UIでのテスト実行
+- **test-storybook**: Storybookテストの実行
+
+### カバレッジ設定
+- **Vitest設定**: v8プロバイダー、複数レポーター
+- **除外設定**: node_modules、.storybook、storiesファイル等
+- **レポート形式**: text、json、html、lcov
 
 ## 次の検証項目
 
-### 1. CI/CD連携
-- [ ] GitHub Actionsでの自動テスト
-- [ ] デプロイ時のテスト実行
-- [ ] プルリクエスト時のテスト実行
-
-### 2. パフォーマンス検証
+### 1. パフォーマンス検証
 - [ ] テスト実行速度の測定
 - [ ] メモリ使用量の測定
 - [ ] 大規模プロジェクトでの動作確認
 
-### 3. より高度なテスト
+### 2. より高度なテスト
 - [ ] ネットワークリクエストのモック
 - [ ] ローカルストレージのテスト
 - [ ] ブラウザストレージのテスト
 - [ ] ファイルアップロードのテスト
+
+### 3. デプロイメント
+- [ ] Vercelへの自動デプロイ
+- [ ] Netlifyへの自動デプロイ
+- [ ] 環境別の設定管理
 
 ## 参考資料
 - [Storybook Vitest Addon](https://storybook.js.org/addons/@storybook/addon-vitest)
@@ -221,6 +246,8 @@ Failed to resolve dependency: markdown-to-jsx, present in client 'optimizeDeps.i
 - [clsx](https://github.com/lukeed/clsx)
 - [tailwind-merge](https://github.com/dcastil/tailwind-merge)
 - [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
+- [GitHub Actions](https://docs.github.com/en/actions)
+- [Storybook Test Runner](https://storybook.js.org/docs/writing-tests/test-runner)
 
 ## 検証結果
 （検証後に記入予定）

@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+## プロジェクト概要
+- storybookのvitestアドオンがいい感じらしいので素振りしていく
+- docs/memo.mdは検証したいことをまとめる
+
+- docs/article.mdは検証したことをまとめる

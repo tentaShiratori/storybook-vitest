@@ -222,24 +222,6 @@ Failed to resolve dependency: markdown-to-jsx, present in client 'optimizeDeps.i
 - **除外設定**: node_modules、.storybook、storiesファイル等
 - **レポート形式**: text、json、html、lcov
 
-## 次の検証項目
-
-### 1. パフォーマンス検証
-- [ ] テスト実行速度の測定
-- [ ] メモリ使用量の測定
-- [ ] 大規模プロジェクトでの動作確認
-
-### 2. より高度なテスト
-- [ ] ネットワークリクエストのモック
-- [ ] ローカルストレージのテスト
-- [ ] ブラウザストレージのテスト
-- [ ] ファイルアップロードのテスト
-
-### 3. デプロイメント
-- [ ] Vercelへの自動デプロイ
-- [ ] Netlifyへの自動デプロイ
-- [ ] 環境別の設定管理
-
 ## 参考資料
 - [Storybook Vitest Addon](https://storybook.js.org/addons/@storybook/addon-vitest)
 - [Vitest Documentation](https://vitest.dev/)
